@@ -25,7 +25,7 @@ public interface DepartmentDao {
 	 * @return department entity
 	 */
 	DepartmentEntity findByDeptCode(String deptCode);
-	
+
 	/**
 	 * Remove Department
 	 * 
@@ -33,7 +33,7 @@ public interface DepartmentDao {
 	 * @return true if entity removed successfully.
 	 */
 	boolean removeDepartment(String deptCode);
-	
+
 	/**
 	 * Update Department
 	 * 
@@ -41,4 +41,12 @@ public interface DepartmentDao {
 	 * @return true if entity updated successfully.
 	 */
 	boolean updateDepartment(DepartmentEntity department);
+
+	/**
+	 * Is Department Exist
+	 * 
+	 * @param deptCode
+	 * @return return true if department exist
+	 */
+	boolean isDepartmentExist(String deptCode);
 }

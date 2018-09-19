@@ -24,6 +24,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
 		boolean isAdd = false;
 		EntityManager em = EntityManagerUtil.getEntityManager();
+		
 		try {
 			em.getTransaction().begin();
 			em.persist(department);
@@ -48,6 +49,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
 	 */
 	@Override
 	public DepartmentEntity findByDeptCode(String deptCode) {
+		
 		EntityManager em = EntityManagerUtil.getEntityManager();
 		return em.find(DepartmentEntity.class, deptCode);
 	}
@@ -60,6 +62,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
 	 */
 	@Override
 	public boolean removeDepartment(String deptCode) {
+		
 		boolean isRemove = false;
 		DepartmentEntity department;
 
@@ -97,6 +100,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
 		boolean isUpdate = false;
 		EntityManager em = EntityManagerUtil.getEntityManager();
+		
 		try {
 			if (department != null) {
 				DepartmentEntity currentDepartment = em.find(DepartmentEntity.class, department.getDeptCode());
@@ -117,5 +121,21 @@ public class DepartmentDaoImpl implements DepartmentDao {
 			}
 		}
 		return isUpdate;
+	}
+
+	/**
+	 * Is Department Exist
+	 * 
+	 * @param deptCode
+	 * @return return true if department exist
+	 */
+	@Override
+	public boolean isDepartmentExist(String deptCode) {
+		
+		EntityManager em = EntityManagerUtil.getEntityManager();
+		DepartmentEntity department = em.find(DepartmentEntity.class, deptCode);
+
+		boolean isExist = (department == null) ? false : true;
+		return isExist;
 	}
 }
