@@ -24,28 +24,24 @@ public class DepartmentController {
 	 */
 	public boolean addDepartment(DepartmentEntity department) throws BusinessRuleException {
 
-		try {
-			if (department == null) {
-				throw new BusinessRuleException("D-ADD-01", "Department is mandatory");
-			}
-
-			if (Common.isBlankOrNull(department.getDeptCode())) {
-				throw new BusinessRuleException("D-ADD-02", "Department code is mandatory");
-			}
-
-			if (Common.isBlankOrNull(department.getName())) {
-				throw new BusinessRuleException("D-ADD-03", "Department name is mandatory");
-			}
-
-			if (Common.isBlankOrNull(department.getLocation())) {
-				throw new BusinessRuleException("D-ADD-04", "Department location is mandatory");
-			}
-
-			DepartmentDao dao = new DepartmentDaoImpl();
-			return dao.addDepartment(department);
-		} catch (BusinessRuleException bex) {
-			throw new BusinessRuleException(bex.getErrorCode(), bex.getMessage());
+		if (department == null) {
+			throw new BusinessRuleException("D-ADD-01", "Department is mandatory");
 		}
+
+		if (Common.isBlankOrNull(department.getDeptCode())) {
+			throw new BusinessRuleException("D-ADD-02", "Department code is mandatory");
+		}
+
+		if (Common.isBlankOrNull(department.getName())) {
+			throw new BusinessRuleException("D-ADD-03", "Department name is mandatory");
+		}
+
+		if (Common.isBlankOrNull(department.getLocation())) {
+			throw new BusinessRuleException("D-ADD-04", "Department location is mandatory");
+		}
+
+		DepartmentDao dao = new DepartmentDaoImpl();
+		return dao.addDepartment(department);
 	}
 
 	/**
@@ -61,14 +57,14 @@ public class DepartmentController {
 		DepartmentEntity department;
 
 		if (Common.isBlankOrNull(deptCode)) {
-			throw new BusinessRuleException("D-F-01", "Department code is mandatory");
+			throw new BusinessRuleException("D-FIND-01", "Department code is mandatory");
 		}
 
 		DepartmentDao dao = new DepartmentDaoImpl();
 		department = dao.findByDeptCode(deptCode);
 
 		if (department == null) {
-			throw new BusinessRuleException("D-F-02", "Department is exist");
+			throw new BusinessRuleException("D-FIND-02", "Department is not exist");
 		}
 		return department;
 	}
@@ -84,7 +80,11 @@ public class DepartmentController {
 	public boolean removeDepartment(String deptCode) throws BusinessRuleException {
 
 		if (Common.isBlankOrNull(deptCode)) {
-			throw new BusinessRuleException("D-R-01", "Department code is mandatory");
+			throw new BusinessRuleException("D-REMOVE-01", "Department code is mandatory");
+		}
+
+		if (!isDepartmentExist(deptCode)) {
+			throw new BusinessRuleException("D-REMOVE-02", "Department code is not exist");
 		}
 
 		DepartmentDao dao = new DepartmentDaoImpl();
@@ -102,22 +102,39 @@ public class DepartmentController {
 	public boolean updateDepartment(DepartmentEntity department) throws BusinessRuleException {
 
 		if (department == null) {
-			throw new BusinessRuleException("D-U-01", "Department is mandatory");
+			throw new BusinessRuleException("D-UPDATE-01", "Department is mandatory");
 		}
 
 		if (Common.isBlankOrNull(department.getDeptCode())) {
-			throw new BusinessRuleException("D-U-02", "Department code is mandatory");
+			throw new BusinessRuleException("D-UPDATE-02", "Department code is mandatory");
 		}
 
 		if (Common.isBlankOrNull(department.getLocation())) {
-			throw new BusinessRuleException("D-U-03", "Department location is mandatory");
+			throw new BusinessRuleException("D-UPDATE-03", "Department location is mandatory");
 		}
 
 		if (Common.isBlankOrNull(department.getName())) {
-			throw new BusinessRuleException("D-U-04", "Department name is mandatory");
+			throw new BusinessRuleException("D-UPDATE-04", "Department name is mandatory");
 		}
 
 		DepartmentDao dao = new DepartmentDaoImpl();
 		return dao.updateDepartment(department);
+	}
+
+	/**
+	 * Is Department Exist
+	 * 
+	 * @param deptCode
+	 * @return
+	 * @throws BusinessRuleException
+	 */
+	public boolean isDepartmentExist(String deptCode) throws BusinessRuleException {
+
+		if (Common.isBlankOrNull(deptCode)) {
+			throw new BusinessRuleException("D-FIND-01", "Department code is mandatory");
+		}
+
+		DepartmentDao dao = new DepartmentDaoImpl();
+		return dao.isDepartmentExist(deptCode);
 	}
 }

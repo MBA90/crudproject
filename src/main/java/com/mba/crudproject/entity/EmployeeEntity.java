@@ -35,12 +35,14 @@ public class EmployeeEntity implements Serializable {
 
 	public static final String EMPLOYEE_FIND_ALL = "com.mba.EmployeeEntity.findAll";
 
+	public static final int EMPLOYEE_MIN_AGE = 24;
+
 	@Column(name = "id")
-	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private BigInteger id;
 
 	@Column(name = "emp_code", nullable = false, unique = true)
+	@Id
 	private String empCode;
 
 	@Column(name = "first_name", nullable = false)
@@ -145,6 +147,5 @@ public class EmployeeEntity implements Serializable {
 				+ lastName + ", age=" + age + ", dateOfJoining=" + dateOfJoining + ", designation=" + designation
 				+ ", department=" + department.toString() + "]";
 	}
-	
-	
+
 }
